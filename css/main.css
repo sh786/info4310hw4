@@ -4,5 +4,10 @@
 
 #map {
   width: 100%;
-  height: 80vh;
+  height: 84vh;
+}
+
+.removetop {
+  margin-top: -24px;
+  margin-bottom: 0!important;
 }
