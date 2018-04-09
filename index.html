@@ -10,6 +10,7 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="./markerclusterer.js" type="text/javascript"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 
 <body>
@@ -77,18 +78,30 @@
   <div class="columns is-gapless">
     <div class="column is-one-third sidebar">Sidebar</div>
     <div class="column is-two-thirds">
-        <div id="map"></div>
-        <script>
+      <div id="map"></div>
+      <script>
           var center = new google.maps.LatLng(37.4419, -122.1419);
-          var options = {
-            'zoom': 13,
-            'center': center,
-            'mapTypeId': google.maps.MapTypeId.ROADMAP
-          };
-  
-          var map = new google.maps.Map(document.getElementById("map"), options);
-          var mc = new MarkerClusterer(map);
-        </script>
+        var options = {
+          'zoom': 13,
+          'center': center,
+          'mapTypeId': google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), options);
+        
+        // sample data from palo alto
+        var markers = [];
+          var latLng1 = new google.maps.LatLng(37.443224, -122.170792);
+          var marker = new google.maps.Marker({ 'position': latLng1 });
+          markers.push(marker);
+          var latLng2 = new google.maps.LatLng(37.443228, -122.168056);
+          var marker = new google.maps.Marker({ 'position': latLng2 });
+          markers.push(marker);
+          var latLng3 = new google.maps.LatLng(37.439840, -122.158057);
+          var marker = new google.maps.Marker({ 'position': latLng3 });
+          markers.push(marker);
+        var markerCluster = new MarkerClusterer(map, markers);
+      </script>
     </div>
   </div>
 </body>
