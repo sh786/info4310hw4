@@ -1,22 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-  </head>
-  <body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PittHomes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+
+<body>
+  <div class="columns">
+    <div class="column">
+      <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="./index.html">
+            <span class="icon has-text-black">
+                <i class="fas fa-lg fa-home"></i>
+              </span>
+            <img src="./images/logo.svg" alt="PittHomes" width="150" height="28">
+          </a>
+
+          <!-- if we want menu items with a hamburger button
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a> -->
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="columns">
+    <!-- filter bar -->
+    <div class="column">
+      <div class="container is-fluid">
+        <form action="#">
+          <div class="field is-grouped">
+            <div class="control has-icons-left">
+              <input class="input is-one-third" type="text" placeholder="Search">
+              <span class="icon is-small is-left">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+            <p class="control">
+              <a class="button is-light">
+                Filter 1
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-light">
+                Filter 2
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-light">
+                Filter 3
+              </a>
+            </p>
+            <div class="control">
+                <div class="select">
+                  <select>
+                    <option selected>Neighborhood</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column is-one-third sidebar">Sidebar</div>
+    <div class="column is-two-thirds">Map</div>
+  </div>
   <section class="section">
     <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
     </div>
   </section>
-  </body>
+</body>
+
 </html>
