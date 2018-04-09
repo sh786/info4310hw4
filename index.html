@@ -47,21 +47,30 @@
                 <i class="fas fa-search"></i>
               </span>
             </div>
-            <p class="control">
-              <a class="button is-light">
-                Filter 1
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-light">
-                Filter 2
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-light">
-                Filter 3
-              </a>
-            </p>
+            <div class="control">
+                <div class="select">
+                  <select>
+                    <option selected>Neighborhood</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+              </div>
+            <div class="control">
+                <div class="select">
+                  <select>
+                    <option selected>Neighborhood</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+              </div>
+            <div class="control">
+                <div class="select">
+                  <select>
+                    <option selected>Neighborhood</option>
+                    <option>With options</option>
+                  </select>
+                </div>
+              </div>
             <div class="control">
               <div class="select">
                 <select>
@@ -88,7 +97,7 @@
         };
 
         var map = new google.maps.Map(document.getElementById("map"), options);
-        
+
         // sample data from palo alto
         var markers = [];
           var latLng1 = new google.maps.LatLng(37.443224, -122.170792);
