@@ -122,6 +122,28 @@
         var marker = new google.maps.Marker({ 'position': latLng3 });
         markers.push(marker);
         var markerCluster = new MarkerClusterer(map, markers);
+        //list of filter functions to compose when users compound filter criteria
+
+        filters={address:[], zestimate:[],beds:[],baths:[],hood:[],prop_size:[],prop_type:[]};
+          
+
+           var multiFilter = (arr, filters) => {
+            var filterKeys = Object.keys(filters);
+            return arr.filter(eachObj => {
+              return filterKeys.every(eachKey => {
+                if (!filters[eachKey].length) {
+                  return true; // passing an empty filter means that filter is ignored.
+      }
+      return filters[eachKey].includes(eachObj[eachKey]);
+    });
+  });
+};
+
+        
+
+       
+
+
       </script>
     </div>
   </div>
