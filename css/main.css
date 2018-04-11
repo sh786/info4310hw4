@@ -11,3 +11,43 @@
   margin-top: -24px;
   margin-bottom: 0!important;
 }
+
+.side-item {
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 0;
+  border-top: 0;
+  box-shadow: none;
+  border-bottom: solid 1px hsl(0, 0%, 90%);
+  padding: 15px;
+  margin-bottom: 0 !important;
+}
+
+.filter {
+  background-color: hsl(0, 0%, 100%);
+}
+
+.zest {
+  font-size: 28px;
+  margin-right: 6px;
+}
+
+.bed {
+  font-size: 14px;
+}
+
+.bath {
+  font-size: 14px;
+}
+
+.sqft {
+  font-size: 14px;
+}
+
+.address {
+  display: block;
+  font-size: 12px;
+}
+
+.neighborhood {
+  font-size: 12px;
+}

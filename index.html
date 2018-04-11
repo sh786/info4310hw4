@@ -30,7 +30,7 @@
   </div>
   <div class="columns removetop">
     <!-- filter bar -->
-    <div class="column">
+    <div class="column filter">
       <div class="container is-fluid">
         <form action="#">
           <div class="field is-grouped">
@@ -97,7 +97,33 @@
     </div>
   </div>
   <div class="columns is-gapless removetop">
-    <div class="column is-one-third sidebar">Sidebar</div>
+    <div class="column is-one-third sidebar">
+      <!-- mock items -->
+      <div class="box side-item">
+        <span class="zest">$200,000</span>
+        <span class="bed">1 Bed &bull;</span>
+        <span class="bath">1 Bath &bull;</span>
+        <span class="sqft">1,800 sqft</span>
+        <span class="address">123 Main St, Pittsburgh, PA</span>
+        <span class="neighborhood">Downtown</span>
+      </div>
+      <div class="box side-item">
+        <span class="zest">$350,000</span>
+        <span class="bed">2 Bed &bull;</span>
+        <span class="bath">1.5 Bath &bull;</span>
+        <span class="sqft">2,500 sqft</span>
+        <span class="address">456 South St, Pittsburgh, PA</span>
+        <span class="neighborhood">North Hill</span>
+      </div>
+      <div class="box side-item">
+        <span class="zest">$500,000</span>
+        <span class="bed">3 Bed &bull;</span>
+        <span class="bath">2 Bath &bull;</span>
+        <span class="sqft">3,200 sqft</span>
+        <span class="address">789 Steeler St, Pittsburgh, PA</span>
+        <span class="neighborhood">South Side</span>
+      </div>
+    </div>
     <div class="column is-two-thirds">
       <div id="map"></div>
       <script>
@@ -124,24 +150,24 @@
         var markerCluster = new MarkerClusterer(map, markers);
         //list of filter functions to compose when users compound filter criteria
 
-        filters={address:[], zestimate:[],beds:[],baths:[],hood:[],prop_size:[],prop_type:[]};
-          
+        filters = { address: [], zestimate: [], beds: [], baths: [], hood: [], prop_size: [], prop_type: [] };
 
-           var multiFilter = (arr, filters) => {
-            var filterKeys = Object.keys(filters);
-            return arr.filter(eachObj => {
-              return filterKeys.every(eachKey => {
-                if (!filters[eachKey].length) {
-                  return true; // passing an empty filter means that filter is ignored.
-      }
-      return filters[eachKey].includes(eachObj[eachKey]);
-    });
-  });
-};
 
-        
+        var multiFilter = (arr, filters) => {
+          var filterKeys = Object.keys(filters);
+          return arr.filter(eachObj => {
+            return filterKeys.every(eachKey => {
+              if (!filters[eachKey].length) {
+                return true; // passing an empty filter means that filter is ignored.
+              }
+              return filters[eachKey].includes(eachObj[eachKey]);
+            });
+          });
+        };
 
-       
+
+
+
 
 
       </script>
