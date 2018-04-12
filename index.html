@@ -104,7 +104,7 @@
       <script>
         let houseData = [];
 
-        d3.csv('Zillow_Pittsburgh_forSale_08-20.csv', function (d) {
+        d3.csv('filtered.csv', function (d) {
           return {
             address: d['Street Address'],
             latitude: d['Latitude'],
@@ -113,20 +113,20 @@
             state: d['State'],
             zip: d['Zipcode'],
             propType: d['Property Type'],
-            sqft: d['Finished (Sq.Ft.)'],
+            sqft: d['Finished Size (Sq.Ft.)'],
             bath: d['Bathroom'],
             bed: d['Bedrooms'],
-            zest: d['Zestimate Amount'],
+            price: d['Sale Amount'],
             yearBuilt: d['Year Built'],
             neighborhood: d['Neighborhood']
           };
         }).then(function (data) {
           houseData = data;
-          populateMap();
+          console.log(houseData);
+          populateMapAndResults();
         });
 
-        let populateMap = () => {
-          console.log('handle');
+        let populateMapAndResults = () => {
           var center = new google.maps.LatLng(40.441016, -79.992863);
           var options = {
             'zoom': 12,
@@ -148,7 +148,7 @@
             d3.select('.sidebar').append('div')
               .attr('class', 'box side-item')
               .html(function () {
-                return `<span class="zest">$${addCommas(house.zest)}</span>
+                return `<span class="zest">$${addCommas(house.price)}</span>
                 <span class="bed">${house.bed} Bed &bull;</span>
                 <span class="bath">${house.bath} Bath &bull;</span>
                 <span class="sqft">${addCommas(house.sqft)} sqft</span>
@@ -162,7 +162,7 @@
 
         //list of filter functions to compose when users compound filter criteria
 
-        filters = { address: [], zest: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
+        filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
 
         function addCommas(intNum) {
           return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
