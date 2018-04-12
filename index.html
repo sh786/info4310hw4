@@ -127,27 +127,50 @@
     <div class="column is-two-thirds">
       <div id="map"></div>
       <script>
-        var center = new google.maps.LatLng(37.4419, -122.1419);
-        var options = {
-          'zoom': 13,
-          'center': center,
-          'mapTypeId': google.maps.MapTypeId.ROADMAP
-        };
+        let houseData = [];
 
-        var map = new google.maps.Map(document.getElementById("map"), options);
+        d3.csv('Zillow_Pittsburgh_forSale_08-20.csv', function (d) {
+          return {
+            address: d['Street Address'],
+            latitude: d['Latitude'],
+            longitude: d['Longitude'],
+            city: d['City'],
+            state: d['State'],
+            zip: d['Zipcode'],
+            propType: d['Property Type'],
+            sqft: d['Finished (Sq.Ft.)'],
+            bath: d['Bathroom'],
+            bed: d['Bedrooms'],
+            zest: d['Zestimate Amount'],
+            yearBuilt: d['Year Built']
+          };
+        }).then(function (data) {
+          houseData = data;
+          populateMap();
+        });
 
-        // sample data from palo alto
-        var markers = [];
-        var latLng1 = new google.maps.LatLng(37.443224, -122.170792);
-        var marker = new google.maps.Marker({ 'position': latLng1 });
-        markers.push(marker);
-        var latLng2 = new google.maps.LatLng(37.443228, -122.168056);
-        var marker = new google.maps.Marker({ 'position': latLng2 });
-        markers.push(marker);
-        var latLng3 = new google.maps.LatLng(37.439840, -122.158057);
-        var marker = new google.maps.Marker({ 'position': latLng3 });
-        markers.push(marker);
-        var markerCluster = new MarkerClusterer(map, markers);
+        let populateMap = () => {
+          console.log('handle');
+          var center = new google.maps.LatLng(40.441016, -79.992863);
+          var options = {
+            'zoom': 12,
+            'center': center,
+            'mapTypeId': google.maps.MapTypeId.ROADMAP
+          };
+
+          var map = new google.maps.Map(document.getElementById("map"), options);
+
+          houseData.forEach(function (house) {
+            console.log(house);
+            let latLng = new google.maps.LatLng(house.latitude, house.longitude);
+            let marker = new google.maps.Marker({ 'position': latLng });
+            markers.push(marker);
+          });
+
+
+          var markerCluster = new MarkerClusterer(map, markers);
+        }
+
         //list of filter functions to compose when users compound filter criteria
 
         filters = { address: [], zestimate: [], beds: [], baths: [], hood: [], prop_size: [], prop_type: [] };
