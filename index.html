@@ -125,13 +125,21 @@
           console.log(houseData);
           populateMapAndResults();
         });
+        let filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
         let bathroom_selection = document.getElementById('bathroom');
         let bedroom_selection = document.getElementById('bedroom');
         let price_selection = document.getElementById('price');
+        let address_selection = document.getElementById('address');
+        let neighboorhood_selection = document.getElementById('hood');
+        let footage_selection = document.getElementById('sqft');
+        let prop_type_selection = document.getElementById('prop_type');
+
         // bathroom_selection.onchange = filter_bath();
         // bedroom_selection.onchange = filter_bed();
         // price_selection.onchange = filter_price();
+        function filter_select(){
 
+        }
         let populateMapAndResults = () => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
           let options = {
@@ -168,7 +176,7 @@
 
         //list of filter functions to compose when users compound filter criteria
 
-        filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
+        
 
         function addCommas(intNum) {
           return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
