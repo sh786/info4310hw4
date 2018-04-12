@@ -42,27 +42,26 @@
             </div>
             <div class="control">
               <div class="select">
-                <select id = "price">
+                <select id="price">
                   <option selected>Price</option>
-                  <option value= 0>0</option>
-                  <option value = 50000>50,000+</option>
-                  <option value = 75000>75,000+</option>
-                  <option value = 100000>100,000+</option>
-                  <option value = 150000 >150,000+</option>
-                  <option value = 200000>200,000+</option>
-                  <option value = 250000>250,000+</option>
-                  <option value = 300000>300,000+</option>
-                  <option value = 400000>400,000+</option>
-                  <option value = 500000>500,000+</option>
-                  <option value = 600000>600,000+</option>
-                  <option value = 750000>750,000+</option>
-                  <option value = 1000000>1,000,000+</option>
+                  <option>0-50,000</option>
+                  <option>50,000-100,000</option>
+                  <option>100,000-150,000</option>
+                  <option>150,000-200,000</option>
+                  <option>200,000-250,000</option>
+                  <option>250,000-300,000</option>
+                  <option>300,000-400,000</option>
+                  <option>400,000-500,000</option>
+                  <option>500,000-600,000</option>
+                  <option>600,000-750,000</option>
+                  <option>750,000-1,000,000</option>
+                  <option>1,000,000+</option>
                 </select>
               </div>
             </div>
             <div class="control">
               <div class="select">
-                <select id = "bedroom">
+                <select id="bed">
                   <option selected>Beds</option>
                   <option value = 1>1+</option>
                   <option value = 2>2+</option>
@@ -73,7 +72,7 @@
             </div>
             <div class="control">
               <div class="select">
-                <select id = "bathroom">
+                <select id="bath">
                   <option selected>Baths</option>
                   <option value = 1>1+</option>
                   <option value = 1.5>1.5+</option>
@@ -85,9 +84,26 @@
             </div>
             <div class="control">
               <div class="select">
-                <select>
+                <select id="hood">
                   <option selected>Neighborhood</option>
                   <option>With options</option>
+                </select>
+              </div>
+            </div>
+            <div class="control">
+              <div class="select">
+                <select id="sqft">
+                  <option selected>SqFt</option>
+                  <option>0-1,000</option>
+                  <option>1,000-1,500</option>
+                  <option>1,500-2,000</option>
+                  <option>2,000-2,500</option>
+                  <option>2,500-3,000</option>
+                  <option>3,000-3,500</option>
+                  <option>3,500-4,000</option>
+                  <option>4,000-5,000</option>
+                  <option>5,000-6,000</option>
+                  <option>6,000+</option>
                 </select>
               </div>
             </div>
@@ -126,8 +142,8 @@
           populateMapAndResults();
         });
         let filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
-        let bathroom_selection = document.getElementById('bathroom');
-        let bedroom_selection = document.getElementById('bedroom');
+        let bathroom_selection = document.getElementById('bath');
+        let bedroom_selection = document.getElementById('bed');
         let price_selection = document.getElementById('price');
         let address_selection = document.getElementById('address');
         let neighboorhood_selection = document.getElementById('hood');
@@ -138,7 +154,7 @@
         // bedroom_selection.onchange = filter_bed();
         // price_selection.onchange = filter_price();
         function filter_select(){
-
+          
         }
         let populateMapAndResults = () => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
