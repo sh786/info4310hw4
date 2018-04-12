@@ -98,31 +98,6 @@
   </div>
   <div class="columns is-gapless removetop">
     <div class="column is-one-third sidebar">
-      <!-- mock items -->
-      <div class="box side-item">
-        <span class="zest">$200,000</span>
-        <span class="bed">1 Bed &bull;</span>
-        <span class="bath">1 Bath &bull;</span>
-        <span class="sqft">1,800 sqft</span>
-        <span class="address">123 Main St, Pittsburgh, PA</span>
-        <span class="neighborhood">Downtown</span>
-      </div>
-      <div class="box side-item">
-        <span class="zest">$350,000</span>
-        <span class="bed">2 Bed &bull;</span>
-        <span class="bath">1.5 Bath &bull;</span>
-        <span class="sqft">2,500 sqft</span>
-        <span class="address">456 South St, Pittsburgh, PA</span>
-        <span class="neighborhood">North Hill</span>
-      </div>
-      <div class="box side-item">
-        <span class="zest">$500,000</span>
-        <span class="bed">3 Bed &bull;</span>
-        <span class="bath">2 Bath &bull;</span>
-        <span class="sqft">3,200 sqft</span>
-        <span class="address">789 Steeler St, Pittsburgh, PA</span>
-        <span class="neighborhood">South Side</span>
-      </div>
     </div>
     <div class="column is-two-thirds">
       <div id="map"></div>
@@ -142,7 +117,8 @@
             bath: d['Bathroom'],
             bed: d['Bedrooms'],
             zest: d['Zestimate Amount'],
-            yearBuilt: d['Year Built']
+            yearBuilt: d['Year Built'],
+            neighborhood: d['Neighborhood']
           };
         }).then(function (data) {
           houseData = data;
@@ -160,13 +136,26 @@
 
           var map = new google.maps.Map(document.getElementById("map"), options);
 
+          var markers = [];
+
           houseData.forEach(function (house) {
-            console.log(house);
+            // populate map
             let latLng = new google.maps.LatLng(house.latitude, house.longitude);
             let marker = new google.maps.Marker({ 'position': latLng });
             markers.push(marker);
-          });
 
+            // add to sidebar
+            d3.select('.sidebar').append('div')
+              .attr('class', 'box side-item')
+              .html(function () {
+                return `<span class="zest">$${addCommas(house.zest)}</span>
+                <span class="bed">${house.bed} Bed &bull;</span>
+                <span class="bath">${house.bath} Bath &bull;</span>
+                <span class="sqft">${addCommas(house.sqft)} sqft</span>
+                <span class="address">${house.address}</span>
+                <span class="neighborhood">${house.neighborhood}</span>`;
+              });
+          });
 
           var markerCluster = new MarkerClusterer(map, markers);
         }
@@ -175,6 +164,9 @@
 
         filters = { address: [], zestimate: [], beds: [], baths: [], hood: [], prop_size: [], prop_type: [] };
 
+        function addCommas(intNum) {
+          return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+        }
 
         var multiFilter = (arr, filters) => {
           var filterKeys = Object.keys(filters);
