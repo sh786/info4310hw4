@@ -142,22 +142,24 @@
           populateMapAndResults();
         });
         let filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
-        let bathroom_selection = document.getElementById('bath');
-        let bedroom_selection = document.getElementById('bed');
-        let price_selection = document.getElementById('price');
-        let address_selection = document.getElementById('address');
-        let neighboorhood_selection = document.getElementById('hood');
-        let footage_selection = document.getElementById('sqft');
-        let prop_type_selection = document.getElementById('prop_type');
+        let bathroom_selection = d3.select("#bath");
+        let bedroom_selection = d3.select("#bed");
+        let price_selection = d3.select("#price");
+        let address_selection = d3.select("#address");
+        let neighboorhood_selection = d3.select("#hood");
+        let footage_selection = d3.select("#sqft");
+        let prop_type_selection = d3.select("#prop_type");
 
-        bathroom_selection.onchange = filter_select("baths",bathroom_selection.value);
-        bedroom_selection.onchange = filter_select("beds",bedroom_selection.value);
-        price_selection.onchange = filter_select("price",price_selection.value);
+        bathroom_selection.on('change', function() {
+          filter_select("baths",this.value);
+        });
+        // bedroom_selection.onchange = filter_select("beds",bedroom_selection.value);
+        // price_selection.onchange = filter_select("price",price_selection.value);
         function filter_select(criteria, value){
           console.log(value);
-          filters[criteria].append(value);
+          filters[criteria].push(value);
           multiFilter(houseData, filters);
-
+          populateMapAndResults();
         }
         let populateMapAndResults = () => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
@@ -201,7 +203,7 @@
           return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
         }
 
-        let multiFilter = (arr, filters) => {
+        function multiFilter(arr, filters) {
           let filterKeys = Object.keys(filters);
           return arr.filter(eachObj => {
             return filterKeys.every(eachKey => {
