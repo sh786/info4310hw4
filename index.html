@@ -154,6 +154,7 @@
         bedroom_selection.onchange = filter_select("beds",bedroom_selection.value);
         price_selection.onchange = filter_select("price",price_selection.value);
         function filter_select(criteria, value){
+          console.log(value);
           filters[criteria].append(value);
           multiFilter(houseData, filters);
 
