@@ -150,11 +150,13 @@
         let footage_selection = document.getElementById('sqft');
         let prop_type_selection = document.getElementById('prop_type');
 
-        // bathroom_selection.onchange = filter_bath();
-        // bedroom_selection.onchange = filter_bed();
-        // price_selection.onchange = filter_price();
-        function filter_select(){
-          
+        bathroom_selection.onchange = filter_select("baths",bathroom_selection.value);
+        bedroom_selection.onchange = filter_select("beds",bedroom_selection.value);
+        price_selection.onchange = filter_select("price",price_selection.value);
+        function filter_select(criteria, value){
+          filters[criteria].append(value);
+          multiFilter(houseData, filters);
+
         }
         let populateMapAndResults = () => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
