@@ -141,20 +141,20 @@
           console.log(houseData);
           populateMapAndResults();
         });
-        let filters = { address: [], price: [], bed: [], bath: [], hood: [], sqft: [], prop_type: [] };
+        let filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
         let bathroom_selection = d3.select("#bath");
         let bedroom_selection = d3.select("#bed");
         let price_selection = d3.select("#price");
         let address_selection = d3.select("#address");
-        let neighboorhood_selection = d3.select("#hood");
+        let neighborhood_selection = d3.select("#hood");
         let footage_selection = d3.select("#sqft");
         let prop_type_selection = d3.select("#prop_type");
 
         bathroom_selection.on('change', function() {
-          filter_select("bath",this.value);
+          filter_select("baths",this.value);
         });
         bedroom_selection.on('change', function() {
-          filter_select("bed",this.value);
+          filter_select("beds",this.value);
         });
         price_selection.on('change', function() {
           filter_select("price",this.value);
