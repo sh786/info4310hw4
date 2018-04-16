@@ -35,7 +35,7 @@
         <form action="#">
           <div class="field is-grouped">
             <div class="control has-icons-left">
-              <input class="input is-one-third" type="text" placeholder="Search">
+              <input id="search" class="input is-one-third" type="text" placeholder="Search">
               <span class="icon is-small is-left">
                 <i class="fas fa-search"></i>
               </span>
@@ -43,67 +43,57 @@
             <div class="control">
               <div class="select">
                 <select id="price">
-                  <option selected>Price</option>
-                  <option value="50000">0-50,000</option>
-                  <option value="100000">50,000-100,000</option>
-                  <option value="150000">100,000-150,000</option>
-                  <option value="200000">150,000-200,000</option>
-                  <option value="250000">200,000-250,000</option>
-                  <option value="300000">250,000-300,000</option>
-                  <option value="400000">300,000-400,000</option>
-                  <option value="500000">400,000-500,000</option>
-                  <option value="600000">500,000-600,000</option>
-                  <option value="750000">600,000-750,000</option>
-                  <option value="1000000">750,000-1,000,000</option>
-                  <option value="20000000">1,000,000+</option>
+                  <option selected value="any">Any Price</option>
+                  <option value="50000">&lt;50,000</option>
+                  <option value="100000">&lt;100,000</option>
+                  <option value="150000">&lt;150,000</option>
+                  <option value="200000">&lt;00,000</option>
+                  <option value="250000">&lt;250,000</option>
+                  <option value="300000">&lt;300,000</option>
+                  <option value="400000">&lt;400,000</option>
+                  <option value="500000">&lt;500,000</option>
+                  <option value="600000">&lt;600,000</option>
+                  <option value="750000">&lt;750,000</option>
+                  <option value="1000000">&lt;1,000,000</option>
                 </select>
               </div>
             </div>
             <div class="control">
               <div class="select">
                 <select id="bed">
-                  <option selected>Beds</option>
-                  <option value = 1>1+</option>
-                  <option value = 2>2+</option>
-                  <option value = 3>3+</option>
-                  <option value = 4>4+</option>
+                  <option selected value="any">Any Beds</option>
+                  <option value="1">1+</option>
+                  <option value="2">2+</option>
+                  <option value="3">3+</option>
+                  <option value="4">4+</option>
                 </select>
               </div>
             </div>
             <div class="control">
               <div class="select">
                 <select id="bath">
-                  <option selected>Baths</option>
-                  <option value = 1>1+</option>
-                  <option value = 1.5>1.5+</option>
-                  <option value = 2>2+</option>
-                  <option value = 2.5>2.5+</option>
-                  <option value = 3>3+</option>
-                </select>
-              </div>
-            </div>
-            <div class="control">
-              <div class="select">
-                <select id="hood">
-                  <option selected>Neighborhood</option>
-                  <option>With options</option>
+                  <option selected value="any">Any Baths</option>
+                  <option value="1">1+</option>
+                  <option value="1.5">1.5+</option>
+                  <option value="2">2+</option>
+                  <option value="2.5">2.5+</option>
+                  <option value="3">3+</option>
                 </select>
               </div>
             </div>
             <div class="control">
               <div class="select">
                 <select id="sqft">
-                  <option selected>SqFt</option>
-                  <option value="1000">0-1,000</option>
-                  <option value="15000">1,000-1,500</option>
-                  <option value="2000">1,500-2,000</option>
-                  <option value="2500">2,000-2,500</option>
-                  <option value="3000">2,500-3,000</option>
-                  <option value="3500">3,000-3,500</option>
-                  <option value="4000">3,500-4,000</option>
-                  <option value="5000">4,000-5,000</option>
-                  <option value="6000">5,000-6,000</option>
-                  <option value="30000">6,000+</option>
+                  <option selected value="any">Any SqFt</option>
+                  <option value="1000">&lt;1,000</option>
+                  <option value="1500">&lt;1,500</option>
+                  <option value="2000">&lt;2,000</option>
+                  <option value="2500">&lt;2,500</option>
+                  <option value="3000">&lt;3,000</option>
+                  <option value="3500">&lt;3,500</option>
+                  <option value="4000">&lt;4,000</option>
+                  <option value="5000">&lt;5,000</option>
+                  <option value="6000">&lt;6,000</option>
                 </select>
               </div>
             </div>
@@ -139,41 +129,39 @@
         }).then(function (data) {
           houseData = data;
           console.log(houseData);
-          populateMapAndResults();
+          populateMapAndResults(houseData);
         });
-        let filters = { address: [], price: [], beds: [], baths: [], hood: [], sqft: [], prop_type: [] };
+        let filters = { search: [], price: [], bed: [], bath: [], sqft: [] };
         let bathroom_selection = d3.select("#bath");
         let bedroom_selection = d3.select("#bed");
         let price_selection = d3.select("#price");
-        let address_selection = d3.select("#address");
-        let neighborhood_selection = d3.select("#hood");
+        let search_selection = d3.select("#search");
         let footage_selection = d3.select("#sqft");
-        let prop_type_selection = d3.select("#prop_type");
 
-        bathroom_selection.on('change', function() {
-          filter_select("baths",this.value);
+        bathroom_selection.on('change', function () {
+          filter_select("bath", this.value);
         });
-        bedroom_selection.on('change', function() {
-          filter_select("beds",this.value);
+        bedroom_selection.on('change', function () {
+          filter_select("bed", this.value);
         });
-        price_selection.on('change', function() {
-          filter_select("price",this.value);
+        price_selection.on('change', function () {
+          filter_select("price", this.value);
         });
-        neighborhood_selection.on('change', function() {
-          filter_select("hood",this.value);
+        footage_selection.on('change', function () {
+          filter_select("sqft", this.value);
         });
-        footage_selection.on('change', function() {
-          filter_select("sqft",this.value);
+        search_selection.on('input', function () {
+          filter_select("search", this.value);
         });
-        // bedroom_selection.onchange = filter_select("beds",bedroom_selection.value);
-        // price_selection.onchange = filter_select("price",price_selection.value);
-        function filter_select(criteria, value){
+       
+        function filter_select(criteria, value) {
           console.log(value);
+          filters[criteria] = [];
           filters[criteria].push(value);
-          multiFilter(houseData, filters);
-          populateMapAndResults();
+          let newHouseData = filterData(houseData, filters);
+          populateMapAndResults(newHouseData);
         }
-        let populateMapAndResults = () => {
+        let populateMapAndResults = (currHouseData) => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
           let options = {
             'zoom': 12,
@@ -185,7 +173,11 @@
 
           let markers = [];
 
-          houseData.forEach(function (house) {
+          // clear sidebar results
+          d3.selectAll('.sidebar div')
+            .remove();
+
+          currHouseData.forEach(function (house) {
             // populate map
             let latLng = new google.maps.LatLng(house.latitude, house.longitude);
             let marker = new google.maps.Marker({ 'position': latLng });
@@ -209,7 +201,7 @@
 
         //list of filter functions to compose when users compound filter criteria
 
-        
+
 
         function addCommas(intNum) {
           return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
@@ -226,6 +218,51 @@
             });
           });
         };
+
+        function filterData(currHouseData, filters) {
+          // filter by price
+          if (filters['price'].length > 0) {
+            currHouseData = currHouseData.filter(function (item) {
+              if (filters['price'][0] == 'any') return item.price >= 0;
+              return item.price < parseInt(filters['price'][0]);
+            });
+          }
+
+          // filter by beds
+          if (filters['bed'].length > 0) {
+            currHouseData = currHouseData.filter(function (item) {
+              if (filters['bed'][0] == 'any') return item.bed >= 0;
+              return item.bed >= parseInt(filters['bed'][0]);
+            });
+          }
+
+          // filter by baths
+          if (filters['bath'].length > 0) {
+            currHouseData = currHouseData.filter(function (item) {
+              if (filters['bath'][0] == 'any') return item.bath >= 0;
+              return item.bath >= parseFloat(filters['bath'][0]);
+            });
+          }
+
+          // filter by sqft
+          if (filters['sqft'].length > 0) {
+            currHouseData = currHouseData.filter(function (item) {
+              if (filters['sqft'][0] == 'any') return item.sqft >= 0;
+              return item.sqft < parseInt(filters['sqft'][0]);
+            });
+          }
+
+          // filter by search address or neighborhood
+          if (filters['search'].length > 0) {
+            currHouseData = currHouseData.filter(function (item) {
+              if (filters['search'][0] == '') return true;
+              return item.address.toLowerCase().includes(filters['search'][0]) || item.neighborhood.toLowerCase().includes(filters['search'][0]);
+            });
+          }
+
+
+          return currHouseData;
+        }
 
 
 
