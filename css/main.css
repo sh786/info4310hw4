@@ -53,3 +53,11 @@
 .neighborhood {
   font-size: 12px;
 }
+
+.propType {
+  display: block;
+}
+
+.yearBuilt {
+  display: block;
+}
