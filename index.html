@@ -162,6 +162,9 @@
           let newHouseData = filterData(houseData, filters);
           populateMapAndResults(newHouseData);
         }
+
+        let markers = [];
+
         let populateMapAndResults = (currHouseData) => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
           let options = {
@@ -171,8 +174,6 @@
           };
 
           let map = new google.maps.Map(document.getElementById("map"), options);
-
-          let markers = [];
 
           // clear sidebar results
           d3.selectAll('.sidebar div')
@@ -218,6 +219,11 @@
                 <span class="sqft">${addCommas(house.sqft)} sqft</span>
                 <span class="address">${house.address}</span>
                 <span class="neighborhood">${house.neighborhood}</span>`;
+              }).on('click', function() {
+                console.log('clicked');
+                map.setZoom(18);
+                map.setCenter(marker.getPosition());
+                marker.infowindow.open(map, marker);
               });
           });
 
