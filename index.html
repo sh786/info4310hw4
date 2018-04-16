@@ -7,7 +7,7 @@
   <title>PittHomes</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
   <link rel="stylesheet" href="./css/main.css">
-  <link rel="shortcut icon" type="image/ico" href="./images/favicon-home.ico"/>
+  <link rel="shortcut icon" type="image/ico" href="./images/favicon-home.ico" />
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="./markerclusterer.js" type="text/javascript"></script>
@@ -159,11 +159,9 @@
           console.log(value);
           filters[criteria] = [];
           filters[criteria].push(value);
-          let newHouseData = filterData(houseData, filters);
+          let newHouseData = filterData(houseData, filters, map, false);
           populateMapAndResults(newHouseData);
         }
-
-        let markers = [];
 
         let populateMapAndResults = (currHouseData) => {
           let center = new google.maps.LatLng(40.441016, -79.992863);
@@ -173,20 +171,36 @@
             'mapTypeId': google.maps.MapTypeId.ROADMAP
           };
 
+          let markers = [];
+
           let map = new google.maps.Map(document.getElementById("map"), options);
 
-          // clear sidebar results
-          d3.selectAll('.sidebar div')
-            .remove();
 
-          currHouseData.forEach(function (house) {
-            // populate map
-            let latLng = new google.maps.LatLng(house.latitude, house.longitude);
-            let marker = new google.maps.Marker({ 'position': latLng });
-            markers.push(marker);
+          // filter results
+          google.maps.event.addListener(map, 'bounds_changed', function () {
+            let bounds = map.getBounds();
+            let ne = bounds.getNorthEast();
+            let sw = bounds.getSouthWest();
+            currHouseData = filterData(houseData, filters, map, false);
+            currHouseData = currHouseData.filter(function (item) {
+              return map.getBounds().contains(new google.maps.LatLng(item.latitude, item.longitude));
+            });
+            loopHouses();
+          });
 
-            // create tooltip
-            var contentString = `<span class="zest">$${addCommas(house.price)}</span>
+          function loopHouses() {
+            // clear sidebar results
+            d3.selectAll('.sidebar div')
+              .remove();
+
+            currHouseData.forEach(function (house) {
+              // populate map
+              let latLng = new google.maps.LatLng(house.latitude, house.longitude);
+              let marker = new google.maps.Marker({ 'position': latLng });
+              markers.push(marker);
+
+              // create tooltip
+              var contentString = `<span class="zest">$${addCommas(house.price)}</span>
                 <span class="bed">${house.bed} Bed &bull;</span>
                 <span class="bath">${house.bath} Bath &bull;</span>
                 <span class="sqft">${addCommas(house.sqft)} sqft</span>
@@ -197,35 +211,35 @@
                 <span class="zip">${house.zip}</span>
                 <span class="propType">${house.propType}</span>
                 <span class="yearBuilt">Year Built: ${house.yearBuilt}</span>`;
-            
-            var infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
 
-            marker.infowindow = infowindow;
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
 
-            marker.addListener('click', function() {
-              console.log('click');
-              return this.infowindow.open(map, this);
-            });
+              marker.infowindow = infowindow;
 
-            // add to sidebar
-            d3.select('.sidebar').append('div')
-              .attr('class', 'box side-item')
-              .html(function () {
-                return `<span class="zest">$${addCommas(house.price)}</span>
+              marker.addListener('click', function () {
+                return this.infowindow.open(map, this);
+              });
+
+              // add to sidebar
+              d3.select('.sidebar').append('div')
+                .attr('class', 'box side-item')
+                .html(function () {
+                  return `<span class="zest">$${addCommas(house.price)}</span>
                 <span class="bed">${house.bed} Bed &bull;</span>
                 <span class="bath">${house.bath} Bath &bull;</span>
                 <span class="sqft">${addCommas(house.sqft)} sqft</span>
                 <span class="address">${house.address}</span>
                 <span class="neighborhood">${house.neighborhood}</span>`;
-              }).on('click', function() {
-                console.log('clicked');
-                map.setZoom(18);
-                map.setCenter(marker.getPosition());
-                marker.infowindow.open(map, marker);
-              });
-          });
+                }).on('click', function () {
+                  map.setZoom(18);
+                  map.setCenter(marker.getPosition());
+                });
+            });
+          }
+
+          loopHouses();
 
           let markerCluster = new MarkerClusterer(map, markers);
         }
@@ -238,19 +252,7 @@
           return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
         }
 
-        function multiFilter(arr, filters) {
-          let filterKeys = Object.keys(filters);
-          return arr.filter(eachObj => {
-            return filterKeys.every(eachKey => {
-              if (!filters[eachKey].length) {
-                return true; // passing an empty filter means that filter is ignored.
-              }
-              return filters[eachKey].includes(eachObj[eachKey]);
-            });
-          });
-        };
-
-        function filterData(currHouseData, filters) {
+        function filterData(currHouseData, filters, map, hasBounds) {
           // filter by price
           if (filters['price'].length > 0) {
             currHouseData = currHouseData.filter(function (item) {
@@ -290,7 +292,6 @@
               return item.address.toLowerCase().includes(filters['search'][0]) || item.neighborhood.toLowerCase().includes(filters['search'][0]) || item.zip.toLowerCase().includes(filters['search'][0]);
             });
           }
-
           return currHouseData;
         }
 
